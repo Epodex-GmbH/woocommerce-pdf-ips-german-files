@@ -11,7 +11,8 @@ if ( ! defined( 'PIPS_GERMAN_CODE' ) ) {
 }
 
 if ( ! defined( 'PIPS_DOCS_PATH' ) ) {
-	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/medien/wc-pdfs/' );
+//	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/medien/wc-pdfs/' );
+	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/apps/suren/' );
 }
 
 register_activation_hook( __FILE__, 'pdf_ips_german_files_activate' );
@@ -60,11 +61,21 @@ function epodex_doc_created ( $path, $type, $th ) {
 	WPO_WCPDF_Pro()->translations();
 
 	add_filter( "wpo_wcpdf_footer_settings_text", function( $text, $obj ) {
-		$settings = get_option( 'wcpdficr_settings' );
-		if ( @$settings[ 'DE' ] ) {
-			return $settings[ 'DE' ]['text'];
+		$order = $obj->order;
+		if($order->get_parent_id()) {
+			$order = wc_get_order( $order->get_parent_id() );;
 		}
-
+		$country_code = $order->get_shipping_country();
+		if(!$country_code) {
+			$country_code = $order->get_billing_country();
+		}
+		$settings = get_option( 'wcpdficr_settings' );
+		if(@$settings[$country_code]) {
+			if (@$settings[$country_code]['de_text']) {
+				return $settings[$country_code]['de_text'];
+			}
+			return $settings[$country_code]['text'];
+		}
 		return $text;
 	}, 999, 2 );
 
