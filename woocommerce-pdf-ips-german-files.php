@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WooCommerce PDF Invoices & Packing Slips German Documents
-	Version: 1.0.0
+	Version: 1.0.1
 	Author: S.K
 	Text Domain: pips
 */
@@ -59,6 +59,16 @@ function epodex_doc_created ( $path, $type, $th ) {
 	WPO_WCPDF()->translations();
 	WPO_WCPDF_Pro()->translations();
 
+	add_filter( "wpo_wcpdf_footer_settings_text", function( $text, $obj ) {
+		$settings = get_option( 'wcpdficr_settings' );
+		if ( @$settings[ 'DE' ] ) {
+			return $settings[ 'DE' ]['text'];
+		}
+
+		return $text;
+	}, 999, 2 );
+
+
 	$document = wcpdf_get_document( $th->get_type(), (array) ( $th->order_id ) );
 
 	do_action( 'wpo_wcpdf_before_pdf', $document->get_type(), $document );
@@ -76,7 +86,7 @@ function epodex_doc_created ( $path, $type, $th ) {
 	do_action( 'wpo_wcpdf_after_pdf', $document->get_type(), $document );
 
 	global $wpdb;
-	$filename = PIPS_DOCS_PATH . str_replace( '_', '', $wpdb->prefix ).'/'.$type.'-'.$document->get_number() . '.pdf';
+	$filename = PIPS_DOCS_PATH . str_replace( '_', '', $wpdb->prefix ) . '/' . $type . '-' . $document->get_number() . '.pdf';
 
 	file_put_contents( $filename, $pdf );
 }
