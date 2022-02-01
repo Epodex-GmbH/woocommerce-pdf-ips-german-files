@@ -11,8 +11,7 @@ if ( ! defined( 'PIPS_GERMAN_CODE' ) ) {
 }
 
 if ( ! defined( 'PIPS_DOCS_PATH' ) ) {
-//	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/medien/wc-pdfs/' );
-	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/apps/suren/' );
+	define( 'PIPS_DOCS_PATH', '/var/www/vhosts/epodex.com/httpdocs/medien/wc-pdfs/' );
 }
 
 register_activation_hook( __FILE__, 'pdf_ips_german_files_activate' );
