@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.0.2 =
+*Release Date - 14 February 2022*
+
+* Fix - Fixed Locale bug
+
 = 1.0.1 =
 *Release Date - 26 January 2022*
 

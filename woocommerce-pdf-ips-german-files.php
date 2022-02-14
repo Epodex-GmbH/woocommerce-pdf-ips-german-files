@@ -46,7 +46,9 @@ function epodex_doc_created ( $path, $type, $th ) {
 		}
 
 		return $locale;
-	}, 99999, 2 );
+	}, 99999999, 2 );
+	//	add_filter( 'determine_locale', 'force_epodex_language', 99999999);
+	//	add_filter( 'locale', 'force_epodex_language', 99999999);
 	switch_to_locale( $locale );
 	unload_textdomain( 'woocommerce' );
 	unload_textdomain( 'woocommerce-pdf-invoices-packing-slips' );
@@ -58,6 +60,7 @@ function epodex_doc_created ( $path, $type, $th ) {
 	WC()->load_plugin_textdomain();
 	WPO_WCPDF()->translations();
 	WPO_WCPDF_Pro()->translations();
+	load_theme_textdomain( 'dmd-theme', get_template_directory() . '/languages' );
 
 	add_filter( "wpo_wcpdf_footer_settings_text", function( $text, $obj ) {
 		$order = $obj->order;
@@ -89,6 +92,7 @@ function epodex_doc_created ( $path, $type, $th ) {
 		'paper_orientation' => apply_filters( 'wpo_wcpdf_paper_orientation', 'portrait', $document->get_type(), $document ),
 		'font_subsetting'   => $document->settings->font_subsetting
 	);
+
 
 	$pdf_maker = wcpdf_get_pdf_maker( $html, $pdf_settings );
 	$pdf       = apply_filters( 'wpo_wcpdf_pdf_data', $pdf_maker->output(), $document );
