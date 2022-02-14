@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WooCommerce PDF Invoices & Packing Slips German Documents
-	Version: 1.0.1
+	Version: 1.0.2
 	Author: S.K
 	Text Domain: pips
 */
