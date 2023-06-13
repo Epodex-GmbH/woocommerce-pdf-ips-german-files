@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.0.3 =
+*Release Date - 13 June 20233*
+
+* Fix - Fixed WC emails wrong language
+
 = 1.0.2 =
 *Release Date - 14 February 2022*
 

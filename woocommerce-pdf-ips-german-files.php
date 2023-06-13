@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WooCommerce PDF Invoices & Packing Slips German Documents
-	Version: 1.0.2
+	Version: 1.0.3
 	Author: S.K
 	Text Domain: pips
 */
@@ -37,6 +37,10 @@ function epodex_doc_created ( $path, $type, $th ) {
 	if ( $type == 'credit-note' ) {
 		return true;
 	}
+
+	global $wpdb;
+
+	$wplang = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name = 'WPLANG'" );
 
 	$locale = PIPS_GERMAN_CODE;
 	switch_to_locale( $locale );
@@ -103,6 +107,19 @@ function epodex_doc_created ( $path, $type, $th ) {
 	$filename = PIPS_DOCS_PATH . str_replace( '_', '', $wpdb->prefix ) . '/' . $type . '-' . $document->get_number() . '.pdf';
 
 	file_put_contents( $filename, $pdf );
+
+	switch_to_locale( $wplang );
+	unload_textdomain( 'woocommerce' );
+	unload_textdomain( 'woocommerce-pdf-invoices-packing-slips' );
+	unload_textdomain( 'wpo_wcpdf' );
+	unload_textdomain( 'wpo_wcpdf_pro' );
+	unload_textdomain( 'dmd-theme' );
+
+	// reload text domains
+	WC()->load_plugin_textdomain();
+	WPO_WCPDF()->translations();
+	WPO_WCPDF_Pro()->translations();
+	load_theme_textdomain( 'dmd-theme', get_template_directory() . '/languages' );
 }
 
 function force_epodex_language () {
