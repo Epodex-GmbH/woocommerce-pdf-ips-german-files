@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.0.4 =
+*Release Date - 21 May 2024*
+
+* Fix - Removed unnecessary code that related translation
+
 = 1.0.3 =
 *Release Date - 13 June 20233*
 

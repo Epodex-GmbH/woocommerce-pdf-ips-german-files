@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WooCommerce PDF Invoices & Packing Slips German Documents
-	Version: 1.0.3
+	Version: 1.0.4
 	Author: S.K
 	Text Domain: pips
 */
@@ -44,13 +44,7 @@ function epodex_doc_created ( $path, $type, $th ) {
 
 	$locale = PIPS_GERMAN_CODE;
 	switch_to_locale( $locale );
-	add_filter( 'plugin_locale', function( $locale, $plugin ) {
-		if ( in_array( $plugin, [ 'woocommerce', 'woocommerce-pdf-invoices-packing-slips' ] ) ) {
-			return force_epodex_language();
-		}
 
-		return $locale;
-	}, 99999999, 2 );
 	//	add_filter( 'determine_locale', 'force_epodex_language', 99999999);
 	//	add_filter( 'locale', 'force_epodex_language', 99999999);
 	switch_to_locale( $locale );
